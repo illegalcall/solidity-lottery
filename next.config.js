@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
+const nodeExternals = require('webpack-node-externals');
 const nextConfig = {
-  images: {
-    domains: ['picsum.photos'],
-  },
-}
+	images: {
+		domains: ['picsum.photos'],
+	},
+	webpack: (config, { isServer }) => {
+		if (!isServer) {
+			config.externals = [nodeExternals()];
+		}
 
-module.exports = nextConfig
+		return config;
+	},
+};
+
+module.exports = nextConfig;

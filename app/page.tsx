@@ -15,8 +15,10 @@ export default async function Home() {
 	);
 	return (
 		<Provider store={store}>
-			<Header />
-			<Jackpots jackpots={jackpots} />
+			<>
+				<Header />
+				<Jackpots jackpots={jackpots} />
+			</>
 		</Provider>
 	);
 }
