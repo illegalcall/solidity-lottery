@@ -1,4 +1,4 @@
-import background from '../../public/images/money2.png';
+import background from '../../public/images/background.png';
 import Image from 'next/image';
 import Link from 'next/link';
 

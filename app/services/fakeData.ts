@@ -78,3 +78,5 @@ const generateRandomTimestamp = (
 			Math.random() * (end.getTime() - start.getTime())
 	);
 };
+
+const generateLottery = (id: number): Lottery => {};
