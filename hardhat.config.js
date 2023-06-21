@@ -6,8 +6,12 @@ module.exports = {
 	defaultNetwork: 'localhost',
 	networks: {
 		hardhat: {},
-		localhost: {
-			url: 'http://127.0.0.1:8545',
+		// localhost: {
+		// 	url: process.env.SMART_CONTRACT_URL,
+		// },
+		mumbai: {
+			url: process.env.NEXT_APP_RPC_URL,
+			accounts: [`0x${process.env.PRIVATE_KEY}`],
 		},
 	},
 	solidity: {

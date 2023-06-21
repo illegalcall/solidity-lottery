@@ -1,6 +1,9 @@
-import { ethers } from 'hardhat';
-import { faker } from '@faker-js/faker';
-import fs from 'fs';
+// import { ethers } from 'hardhat';
+const { ethers } = require('hardhat');
+// import { faker } from '@faker-js/faker';
+const faker = require('@faker-js/faker');
+// import fs from 'fs';
+const fs = require('fs');
 
 const toWei = (num) =>
 	ethers.utils.parseEther(num.toString());
@@ -31,11 +34,33 @@ const getParams = (iteration) => {
 		'https://img.icons8.com/color/512/lotto.png',
 	];
 
-	const title = faker.random.words(5);
-	const description = faker.lorem.paragraph();
-	const prize = toWei(faker.finance.amount(8, 16));
+	// make an array of random meaningful titles, and pick one
+	const titles = [
+		'housing lottery',
+		'car lottery',
+		'travel lottery',
+		'money lottery',
+		'food lottery',
+		'clothing lottery',
+	];
+	const title = titles[Math.floor(Math.random() * 6)];
+
+	// make an array of random meaningful descriptions, and pick one
+	const descriptions = [
+		'Win a house in the center of the city',
+		'Win a car of your choice',
+		'Win a trip to the country of your choice',
+		'Win a million dollars',
+		'Win a year of free food',
+		'Win a year of free clothing',
+	];
+	const description =
+		descriptions[Math.floor(Math.random() * 6)];
+
+	const prize = toWei(Math.floor(Math.random() * 8) + 8);
 	const ticketPrice = toWei(
-		faker.finance.amount(0.01, 0.05)
+		// Generate a random number between 0.01, 0.05
+		Math.floor((Math.random() * 5) / 100) + 0.01
 	);
 	const expiresAt = addMinutes(5 * iteration);
 	const image = shuffleArray(imagesUrls)[0];

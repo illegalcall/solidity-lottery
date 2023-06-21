@@ -28,3 +28,34 @@ export interface IResult {
 	sharePerWinner: number;
 	winners: IParticipant[];
 }
+
+export interface IStructuredLottery {
+	id: number;
+	title: string;
+	description: string;
+	owner: string;
+	prize: string;
+	ticketPrice: string;
+	image: string;
+	createdAt: string;
+	drawsAt: string;
+	expiresAt: number;
+	winners: number;
+	participants: number;
+	drawn: boolean;
+}
+
+export interface IStructuredParticipant {
+	account: string;
+	lotteryNumber: string;
+	paid: boolean;
+}
+
+export interface IStructuredResult {
+	id: number;
+	completed: boolean;
+	paidout: boolean;
+	timestamp: number;
+	sharePerWinner: string;
+	winners: IStructuredParticipant[];
+}

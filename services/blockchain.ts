@@ -3,7 +3,13 @@ import { ethers } from 'ethers';
 import { globalActions } from '@/app/store/globalSlices';
 import address from '@/artifacts/contractAddress.json';
 import abi from '@/artifacts/contracts/Lottery.sol/Lottery.json';
-import { ILottery, IParticipant } from '@/app/types';
+import {
+	ILottery,
+	IParticipant,
+	IStructuredLottery,
+	IStructuredParticipant,
+	IStructuredResult,
+} from '@/app/types';
 
 const {
 	setWallet,
@@ -212,9 +218,13 @@ const buyTicket = async (
 		const lotteryLuckyNumbers = await getLuckyNumbers(id);
 		const lottery = await getLottery(id);
 
-		store.dispatch(setPurchasedNumbers(purchasedNumbers));
+		store.dispatch(
+			setPurchasedNumbers(purchasedNumbers as any[] & void)
+		);
 		store.dispatch(setLuckyNumbers(lotteryLuckyNumbers));
-		store.dispatch(setJackpot(lottery));
+		store.dispatch(
+			setJackpot(lottery as IStructuredLottery & void)
+		);
 	} catch (error) {
 		reportError(error);
 	}
@@ -243,15 +253,26 @@ const performDraw = async (
 		const lottery = await getLottery(id);
 		const result = await getLotteryResult(id);
 
-		store.dispatch(setParticipants(lotteryParticipants));
-		store.dispatch(setJackpot(lottery));
-		store.dispatch(setResult(result));
+		store.dispatch(
+			setParticipants(
+				lotteryParticipants as IStructuredParticipant[] &
+					void
+			)
+		);
+		store.dispatch(
+			setJackpot(lottery as IStructuredLottery & void)
+		);
+		store.dispatch(
+			setResult(result as IStructuredResult & void)
+		);
 	} catch (error) {
 		reportError(error);
 	}
 };
 
-const structureLotteries = (lotteries: ILottery[]) =>
+const structureLotteries = (
+	lotteries: ILottery[]
+): IStructuredLottery[] =>
 	lotteries.map((lottery) => ({
 		id: Number(lottery.id),
 		title: lottery.title,
@@ -345,7 +366,7 @@ const structuredNumbers = (
 	const purchasedNumbers = [];
 
 	for (let i = 0; i < participants.length; i++) {
-		const purchasedNumber = participants[i][1];
+		const purchasedNumber: string = participants[i][1];
 		purchasedNumbers.push(purchasedNumber);
 	}
 
@@ -372,7 +393,7 @@ const structuredResult = (result) => {
 
 const structuredParticipants = (
 	participants: IParticipant[]
-) =>
+): IStructuredParticipant[] =>
 	participants.map((participant) => ({
 		account: participant[0].toLowerCase(),
 		lotteryNumber: participant[1],
